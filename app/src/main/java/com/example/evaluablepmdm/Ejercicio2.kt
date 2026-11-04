@@ -18,8 +18,8 @@ class Ejercicio2 : AppCompatActivity() {
             insets
         }
 
+        //boton de volver
         val btnvolver = findViewById<Button>(R.id.volver)
-
         btnvolver.setOnClickListener {finish()}
 
 
