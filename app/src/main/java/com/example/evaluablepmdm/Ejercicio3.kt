@@ -34,6 +34,9 @@ class Ejercicio3 : AppCompatActivity() {
         findViewById<Button>(R.id.btnPantalla3).setOnClickListener {
             startActivity(Intent(this, ej3_3::class.java))
         }
+        findViewById<Button>(R.id.btnPantalla4).setOnClickListener {
+            startActivity(Intent(this, ej3_4::class.java))
+        }
 
     }
 }
