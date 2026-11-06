@@ -22,6 +22,9 @@ class Ejercicio3 : AppCompatActivity() {
             insets
         }
 
+        val btnvolver = findViewById<Button>(R.id.volver)
+        btnvolver.setOnClickListener {finish()}
+
         findViewById<Button>(R.id.btnPantalla1).setOnClickListener {
             startActivity(Intent(this, ej3_1::class.java))
         }

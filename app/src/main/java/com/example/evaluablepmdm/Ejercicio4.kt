@@ -1,6 +1,7 @@
 package com.example.evaluablepmdm
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,5 +17,8 @@ class Ejercicio4 : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val btnvolver = findViewById<Button>(R.id.volver)
+        btnvolver.setOnClickListener {finish()}
     }
 }
