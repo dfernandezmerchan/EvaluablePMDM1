@@ -22,10 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity2"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".Ejercicio1"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
@@ -34,11 +30,20 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".MainActivity3"
+            android:name=".Ejercicio3"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Ejercicio3"
+            android:name=".ej3_1"
+            android:exported="false"
+            android:theme="@style/Theme.EvaluablePMDM"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ej3_2"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ej3_3"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
