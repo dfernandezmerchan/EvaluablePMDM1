@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, Ejercicio4::class.java))
         }
 
+        eje5.setOnClickListener {
+            startActivity(Intent(this, Ejercicio5::class.java))
+        }
+
         eje6.setOnClickListener {
             startActivity(Intent(this, Ejercicio6::class.java))
         }
