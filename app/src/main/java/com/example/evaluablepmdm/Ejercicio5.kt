@@ -1,124 +1,121 @@
 package com.example.evaluablepmdm
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import android.widget.Button
 import android.widget.TextView
-import java.text.DecimalFormat
+import androidx.appcompat.app.AppCompatActivity
 
 class Ejercicio5 : AppCompatActivity() {
 
     private lateinit var tvDisplay: TextView
-    private var valorAnterior = Double.NaN
-    private var operacionActual = ""
-    private var nuevaOperacion = true
+
+    private var numeroAnterior = 0.0
+    private var operacion = ""
+    private var nuevoNumero = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_ejercicio5)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         tvDisplay = findViewById(R.id.tvDisplay)
 
-        // 1. Configurar los botones numéricos (0-9) en bucle para ahorrar código
-        val botonesNumeros = listOf(
-            R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4,
-            R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9
-        )
+        // Números
+        findViewById<Button>(R.id.btn0).setOnClickListener { pulsarNumero("0") }
+        findViewById<Button>(R.id.btn1).setOnClickListener { pulsarNumero("1") }
+        findViewById<Button>(R.id.btn2).setOnClickListener { pulsarNumero("2") }
+        findViewById<Button>(R.id.btn3).setOnClickListener { pulsarNumero("3") }
+        findViewById<Button>(R.id.btn4).setOnClickListener { pulsarNumero("4") }
+        findViewById<Button>(R.id.btn5).setOnClickListener { pulsarNumero("5") }
+        findViewById<Button>(R.id.btn6).setOnClickListener { pulsarNumero("6") }
+        findViewById<Button>(R.id.btn7).setOnClickListener { pulsarNumero("7") }
+        findViewById<Button>(R.id.btn8).setOnClickListener { pulsarNumero("8") }
+        findViewById<Button>(R.id.btn9).setOnClickListener { pulsarNumero("9") }
 
-        for (id in botonesNumeros) {
-            findViewById<Button>(id).setOnClickListener { boton ->
-                alPulsarNumero((boton as Button).text.toString())
-            }
+        // Punto
+        findViewById<Button>(R.id.btnPunto).setOnClickListener {
+            pulsarPunto()
         }
 
-        // 2. Configurar botón de punto decimal
-        findViewById<Button>(R.id.btnPunto).setOnClickListener { alPulsarPunto() }
+        // Operaciones
+        findViewById<Button>(R.id.btnSumar).setOnClickListener {
+            pulsarOperacion("+")
+        }
 
-        // 3. Configurar botones de operaciones
-        findViewById<Button>(R.id.btnSumar).setOnClickListener { alPulsarOperacion("+") }
-        findViewById<Button>(R.id.btnRestar).setOnClickListener { alPulsarOperacion("-") }
-        findViewById<Button>(R.id.btnMultiplicar).setOnClickListener { alPulsarOperacion("*") }
-        findViewById<Button>(R.id.btnDividir).setOnClickListener { alPulsarOperacion("/") }
+        findViewById<Button>(R.id.btnRestar).setOnClickListener {
+            pulsarOperacion("-")
+        }
 
-        // 4. Configurar botón de igual (=)
+        findViewById<Button>(R.id.btnMultiplicar).setOnClickListener {
+            pulsarOperacion("*")
+        }
+
+        findViewById<Button>(R.id.btnDividir).setOnClickListener {
+            pulsarOperacion("/")
+        }
+
+        // Igual
         findViewById<Button>(R.id.btnIgual).setOnClickListener {
-            calcularResultado()
-            operacionActual = "" // Resetea la operación tras calcular
+            calcular()
         }
 
-        // 5. Configurar botón de Reset (C)
+        // Borrar
         findViewById<Button>(R.id.btnReset).setOnClickListener {
-            valorAnterior = Double.NaN
-            operacionActual = ""
             tvDisplay.text = "0"
-            nuevaOperacion = true
+            numeroAnterior = 0.0
+            operacion = ""
+            nuevoNumero = true
         }
     }
 
-    private fun alPulsarNumero(numero: String) {
-        if (nuevaOperacion) {
+    private fun pulsarNumero(numero: String) {
+
+        if (nuevoNumero) {
             tvDisplay.text = numero
-            nuevaOperacion = false
+            nuevoNumero = false
         } else {
             tvDisplay.append(numero)
         }
     }
 
-    private fun alPulsarPunto() {
-        if (nuevaOperacion) {
+    private fun pulsarPunto() {
+
+        if (nuevoNumero) {
             tvDisplay.text = "0."
-            nuevaOperacion = false
+            nuevoNumero = false
         } else if (!tvDisplay.text.contains(".")) {
             tvDisplay.append(".")
         }
     }
 
-    private fun alPulsarOperacion(operacion: String) {
-        if (!valorAnterior.isNaN()) {
-            calcularResultado()
-        }
+    private fun pulsarOperacion(op: String) {
 
-        // Guardamos el número actual en pantalla y la operación a realizar
-        valorAnterior = tvDisplay.text.toString().toDoubleOrNull() ?: Double.NaN
-        operacionActual = operacion
-        nuevaOperacion = true // El siguiente número pulsado borrará la pantalla
+        numeroAnterior = tvDisplay.text.toString().toDouble()
+        operacion = op
+        nuevoNumero = true
     }
 
-    private fun calcularResultado() {
-        if (valorAnterior.isNaN() || operacionActual.isEmpty()) return
+    private fun calcular() {
 
-        val valorActual = tvDisplay.text.toString().toDoubleOrNull() ?: return
+        val numeroActual = tvDisplay.text.toString().toDouble()
         var resultado = 0.0
 
-        when (operacionActual) {
-            "+" -> resultado = valorAnterior + valorActual
-            "-" -> resultado = valorAnterior - valorActual
-            "*" -> resultado = valorAnterior * valorActual
+        when (operacion) {
+
+            "+" -> resultado = numeroAnterior + numeroActual
+            "-" -> resultado = numeroAnterior - numeroActual
+            "*" -> resultado = numeroAnterior * numeroActual
             "/" -> {
-                if (valorActual != 0.0) {
-                    resultado = valorAnterior / valorActual
+                if (numeroActual != 0.0) {
+                    resultado = numeroAnterior / numeroActual
                 } else {
                     tvDisplay.text = "Error"
-                    nuevaOperacion = true
+                    nuevoNumero = true
                     return
                 }
             }
         }
 
-        // Formatear el resultado para quitar el ".0" si el número es entero (ej. 5.0 -> 5)
-        val formato = DecimalFormat("#.####")
-        tvDisplay.text = formato.format(resultado)
-
-        valorAnterior = resultado
-        nuevaOperacion = true
+        tvDisplay.text = resultado.toString()
+        nuevoNumero = true
     }
 }
